@@ -1,11 +1,11 @@
 import type { ThemeConfig } from 'antd';
 
 const theme: ThemeConfig = {
-  // components: {
-  //   Button: {
-  //     colorPrimary: "#053B50"
-  //   }
-  // }
+  components: {
+    Menu: {
+      horizontalItemSelectedColor: "#64CCC5"
+    }
+  }
 };
 
 export default theme;
