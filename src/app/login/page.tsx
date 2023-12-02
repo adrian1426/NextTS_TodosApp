@@ -6,7 +6,9 @@ import LoginTemplate from './template/LoginTemplate';
 
 const LoginPage = () => {
   return (
-    <LoginTemplate renderHeader={<LoginHeader />}>
+    <LoginTemplate
+      renderHeader={<LoginHeader />}
+    >
       <LoginForm />
     </LoginTemplate>
   );
