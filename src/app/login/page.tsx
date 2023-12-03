@@ -2,7 +2,7 @@
 
 import LoginForm from './components/LoginForm';
 import LoginHeader from './components/LoginHeader';
-import LoginTemplate from './template/LoginTemplate';
+import LoginTemplate from './templates/LoginTemplate';
 
 const LoginPage = () => {
   return (

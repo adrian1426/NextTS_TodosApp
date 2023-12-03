@@ -1,0 +1,21 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.title {
+  border-bottom: 1px solid #DDD;
+  display: initial;
+}
+
+.form {
+  width: 90%;
+  background-color: #EDF6F5;
+  padding: 6px !important;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+}

@@ -1,8 +1,15 @@
+import TemplateForList from "@/ui/templates/TemplateForList";
+import TodoHeader from "./components/TodoHeader";
+
 const TodosPage = () => {
   return (
-    <div>
-      TodosPage
-    </div>
+    <>
+      <TemplateForList
+        renderHeader={<TodoHeader />}
+      >
+        <h2>Tabla</h2>
+      </TemplateForList>
+    </>
   );
 };
 

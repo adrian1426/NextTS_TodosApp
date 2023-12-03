@@ -30,11 +30,17 @@ export default function TodosLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div>
+    <>
       <MenuHorizontal items={items} />
-      <div>
+      <div
+        style={{
+          height: "calc(100vh - 46px)",
+          backgroundColor: "#EEEEEE",
+          padding: "1% 2%"
+        }}
+      >
         {children}
       </div>
-    </div>
+    </>
   )
 }
