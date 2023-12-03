@@ -1,5 +1,6 @@
 import TemplateForList from "@/ui/templates/TemplateForList";
 import TodoHeader from "./components/TodoHeader";
+import TodoList from "./components/TodoList";
 
 const TodosPage = () => {
   return (
@@ -7,7 +8,7 @@ const TodosPage = () => {
       <TemplateForList
         renderHeader={<TodoHeader />}
       >
-        <h2>Tabla</h2>
+        <TodoList />
       </TemplateForList>
     </>
   );
