@@ -23,7 +23,8 @@ const TodoCard = (props: TodoCardProps) => {
         padding: "0 5px"
       }}
       bodyStyle={{
-        backgroundColor: "#EDF6F5"
+        backgroundColor: "#EDF6F5",
+        height: "230px"
       }}
       title={<TodoCardTitle title={todo.title} idStatusTodo={todo.status} />}
       style={{ width: 300, margin: "5px 0" }}

@@ -24,7 +24,9 @@ const TodoCardContent = (props: TodoCardContentProps) => {
           borderRadius: "5px",
           padding: "10px",
           display: "flex",
-          flexWrap: "wrap"
+          flexWrap: "wrap",
+          height: "86px",
+          overflowY: "auto"
         }}
       >
         <label className={`${monserrat.className}`}>
