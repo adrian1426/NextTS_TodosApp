@@ -1,5 +1,5 @@
 import TemplateForList from "@/ui/templates/TemplateForList";
-import TodoHeader from "./components/TodoHeader";
+import TodoHeader from "./components/todo-header/TodoHeader";
 import TodoList from "./components/TodoList";
 
 const TodosPage = () => {

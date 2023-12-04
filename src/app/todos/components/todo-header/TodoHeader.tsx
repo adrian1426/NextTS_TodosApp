@@ -53,7 +53,7 @@ const TodoHeader = () => {
           htmlType="submit"
           style={{
             width: "20%",
-            backgroundColor: "#176B87"
+            backgroundColor: "#053B50"
           }}
         >
           Buscar
