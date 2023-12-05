@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from 'antd';
 import useApi from '@/hooks/useApi';
 import { useUserContext } from '@/context/userContext';
@@ -11,29 +11,31 @@ const initialDataForm: dataForm = { title: '', description: '' };
 const initialErrorForm: errorForm = { title: false, description: false };
 
 const TodoModalForm = (props: TodoModalFormProps) => {
-  const { isModalOpen, setIsModalOpen, refetchTodos } = props;
+  const { isModalOpen, setIsModalOpen, refetchTodos, todoEdit, resetTodoEdit } = props;
   const [dataForm, setDataForm] = useState<dataForm>(initialDataForm);
   const [dataFormError, setDataFormError] = useState<errorForm>(initialErrorForm);
   const userContext = useUserContext();
 
   const user: any = userContext.user;
-  const urlApiTodos = `${process.env.NEXT_PUBLIC_TODO_API_PATH_V1}/users/${user.id}/todos`;
+  const updOrPostPath = todoEdit?.id ? `/${todoEdit.id}` : "";
+  const urlApiTodos = `${process.env.NEXT_PUBLIC_TODO_API_PATH_V1}/users/${user.id}/todos${updOrPostPath}`;
 
   const objectDate = new Date();
+  const dateFormat = `${objectDate.getDate()}-${objectDate.getMonth() + 1}-${objectDate.getFullYear()}`;
 
   const bodyTodo: any = {
     userId: user.id,
     title: dataForm.title,
     description: dataForm.description,
-    status: 1,
-    createdAt: `${objectDate.getDate()}-${objectDate.getMonth() + 1}-${objectDate.getFullYear()}`,
-    finishedAt: ""
+    status: todoEdit?.status ? todoEdit.status : 1,
+    createdAt: todoEdit?.createdAt ? todoEdit.createdAt : dateFormat,
+    finishedAt: todoEdit?.finishedAt ? todoEdit.finishedAt : dateFormat
   };
 
-  const { refetch: postTodo } = useApi(
+  const { refetch: postUpdTodo } = useApi(
     urlApiTodos,
     {
-      method: 'POST',
+      method: todoEdit?.id ? "PUT" : 'POST',
       headers: {
         "Content-Type": "application/json",
       },
@@ -50,13 +52,14 @@ const TodoModalForm = (props: TodoModalFormProps) => {
       return;
     }
 
-    postTodo(refetchTodos);
+    postUpdTodo(refetchTodos);
     handleModalCancel();
   };
 
   const handleModalCancel = () => {
     setDataForm(initialDataForm);
     setDataFormError(initialErrorForm);
+    resetTodoEdit();
     setIsModalOpen(false);
   };
 
@@ -67,12 +70,16 @@ const TodoModalForm = (props: TodoModalFormProps) => {
     });
   };
 
+  useEffect(() => {
+    setDataForm(todoEdit)
+  }, [todoEdit]);
+
   return (
     <TodoModal
       handleModalCancel={handleModalCancel}
       handleModalOk={handleModalOk}
       isModalOpen={isModalOpen}
-      title='Agregar tarea'
+      title={todoEdit?.id ? "Editar tarea" : "Agregar tarea"}
     >
       <div
         style={{
@@ -86,7 +93,7 @@ const TodoModalForm = (props: TodoModalFormProps) => {
           maxLength={25}
           name="title"
           onChange={onChangeInput}
-          value={dataForm.title}
+          value={dataForm?.title}
         />
 
         <br />
@@ -99,7 +106,7 @@ const TodoModalForm = (props: TodoModalFormProps) => {
           maxLength={100}
           name="description"
           onChange={onChangeInput}
-          value={dataForm.description}
+          value={dataForm?.description}
         />
       </div>
     </TodoModal>

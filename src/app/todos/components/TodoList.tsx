@@ -14,11 +14,21 @@ interface TodoListProps {
 }
 
 const TodoList = (props: TodoListProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { todos, refetch } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [todoEdit, setTodoEdit] = useState<TodoModel | any>({});
 
   const showModal = () => {
     setIsModalOpen(true);
+  };
+
+  const handleEditTodo = (todo: TodoModel) => {
+    setTodoEdit(todo);
+    setIsModalOpen(true);
+  };
+
+  const resetTodoEdit = () => {
+    setTodoEdit({});
   };
 
   return (
@@ -31,7 +41,12 @@ const TodoList = (props: TodoListProps) => {
     >
       {
         todos.map((todo: TodoModel) => (
-          <TodoCard key={todo.id} todo={todo} refetchTodos={refetch} />
+          <TodoCard
+            key={todo.id}
+            todo={todo}
+            refetchTodos={refetch}
+            handleEditTodo={handleEditTodo}
+          />
         ))
       }
 
@@ -49,6 +64,8 @@ const TodoList = (props: TodoListProps) => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         refetchTodos={refetch}
+        todoEdit={todoEdit}
+        resetTodoEdit={resetTodoEdit}
       />
 
       <TodoAddButton showModal={showModal} />

@@ -10,11 +10,12 @@ import { useUserContext } from '@/context/userContext';
 
 interface TodoCardProps {
   todo: TodoModel,
-  refetchTodos: Function
+  refetchTodos: Function,
+  handleEditTodo: (todo: TodoModel) => void
 }
 
 const TodoCard = (props: TodoCardProps) => {
-  const { todo, refetchTodos } = props;
+  const { todo, refetchTodos, handleEditTodo } = props;
   const userContext = useUserContext();
 
   const user: any = userContext.user;
@@ -50,6 +51,10 @@ const TodoCard = (props: TodoCardProps) => {
     updateTodoById(refetchTodos);
   };
 
+  const _handleEditTodo = () => {
+    handleEditTodo(todo);
+  };
+
   return (
     <Card
       headStyle={{
@@ -75,6 +80,7 @@ const TodoCard = (props: TodoCardProps) => {
         idStatusTodo={todo.status}
         handleDeleteTodoById={handleDeleteTodoById}
         handleUpdateTodoById={handleUpdateTodoById}
+        handleEditTodo={_handleEditTodo}
       />
     </Card >
   );

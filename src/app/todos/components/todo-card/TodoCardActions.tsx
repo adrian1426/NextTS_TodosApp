@@ -4,11 +4,12 @@ import { MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 interface TodoCardActionsProps {
   idStatusTodo: number,
   handleDeleteTodoById: () => void,
-  handleUpdateTodoById: () => void
+  handleUpdateTodoById: () => void,
+  handleEditTodo: () => void
 }
 
 const TodoCardActions = (props: TodoCardActionsProps) => {
-  const { idStatusTodo, handleDeleteTodoById, handleUpdateTodoById } = props;
+  const { idStatusTodo, handleDeleteTodoById, handleUpdateTodoById, handleEditTodo } = props;
 
   const textButton = idStatusTodo === 1 ? "Completar tarea" : "Reiniciar tarea";
   const colorButton = idStatusTodo === 1 ? "#64CCC5" : "#D2DBDB";
@@ -53,8 +54,10 @@ const TodoCardActions = (props: TodoCardActionsProps) => {
             icon={<DeleteOutlined />}
           />
         </Popconfirm>
+
         <FloatButton
           icon={<EditOutlined />}
+          onClick={handleEditTodo}
         />
       </FloatButton.Group>
     </div >
