@@ -16,14 +16,38 @@ interface TodoCardProps {
 const TodoCard = (props: TodoCardProps) => {
   const { todo, refetchTodos } = props;
   const userContext = useUserContext();
+
   const user: any = userContext.user;
   const urlApiTodos = `${process.env.NEXT_PUBLIC_TODO_API_PATH_V1}/users/${user.id}/todos/${todo.id}`;
+
+  const objectDate = new Date();
+  const dateFull = `${objectDate.getDate()}-${objectDate.getMonth() + 1}-${objectDate.getFullYear()}`;
+
+  const bodyTodo: any = {
+    ...todo,
+    status: todo.status === 1 ? 2 : 1,
+    createdAt: dateFull,
+    finishedAt: dateFull
+  };
+
   const { refetch: deleteTodoById } = useApi(urlApiTodos, { method: 'DELETE' });
+  const { refetch: updateTodoById } = useApi(urlApiTodos,
+    {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyTodo)
+    });
 
   const todoDate = todo.status === 1 ? todo.createdAt : todo.finishedAt;
 
   const handleDeleteTodoById = () => {
     deleteTodoById(refetchTodos);
+  };
+
+  const handleUpdateTodoById = () => {
+    updateTodoById(refetchTodos);
   };
 
   return (
@@ -50,6 +74,7 @@ const TodoCard = (props: TodoCardProps) => {
       <TodoCardActions
         idStatusTodo={todo.status}
         handleDeleteTodoById={handleDeleteTodoById}
+        handleUpdateTodoById={handleUpdateTodoById}
       />
     </Card >
   );
