@@ -44,10 +44,13 @@ const TodoModalForm = (props: TodoModalFormProps) => {
 
 
   const handleModalOk = () => {
-    if (dataForm.title.length === 0 || dataForm.description.length === 0) {
+    const validationTitle = dataForm.title === undefined || dataForm.title?.trim().length === 0;
+    const validationDescription = dataForm.description === undefined || dataForm.description?.trim().length === 0;
+
+    if (validationTitle || validationDescription) {
       setDataFormError({
-        title: dataForm.title.length === 0,
-        description: dataForm.description.length === 0
+        title: validationTitle,
+        description: validationDescription
       });
       return;
     }
