@@ -40,7 +40,7 @@ const TodoList = (props: TodoListProps) => {
       }}
     >
       {
-        todos.map((todo: TodoModel) => (
+        todos?.map((todo: TodoModel) => (
           <TodoCard
             key={todo.id}
             todo={todo}
@@ -51,7 +51,7 @@ const TodoList = (props: TodoListProps) => {
       }
 
       {
-        todos.length <= 0 && (
+        todos?.length <= 0 && (
           <Result
             icon={<SmileOutlined />}
             title="No se encontraron tareas, ¿Deseas agregar uno?"

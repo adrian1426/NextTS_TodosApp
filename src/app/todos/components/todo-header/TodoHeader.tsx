@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react';
 import SelectOptions from '@/ui/SelectOptions';
 import { FileSearchOutlined } from '@ant-design/icons';
 import { Input, Button, Form } from 'antd';
@@ -18,12 +19,27 @@ const optionsEstatusTodo = [
     value: '2',
     label: 'Completados',
   }
-]
+];
 
-const TodoHeader = () => {
+interface TodoHeaderProps {
+  filterTodos: (title: string, status: string) => void
+}
+
+const TodoHeader = (props: TodoHeaderProps) => {
+  const { filterTodos } = props;
+  const [title, setTitle] = useState("");
+  const [status, setStatus] = useState("");
+
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setTitle(e.target.value);
+  };
 
   const onChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+    setStatus(value)
+  };
+
+  const onFinishSearch = () => {
+    filterTodos(title, status);
   };
 
   return (
@@ -34,12 +50,13 @@ const TodoHeader = () => {
 
       <Form
         className={styles.form}
-        onFinish={() => console.log("buscar")}
+        onFinish={onFinishSearch}
       >
         <Input
           placeholder="Titulo de la tarea"
           prefix={<FileSearchOutlined />}
           style={{ width: "30%" }}
+          onChange={onChangeInput}
         />
 
         <SelectOptions
