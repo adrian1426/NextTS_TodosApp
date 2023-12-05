@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Spin, Result } from 'antd';
+import { Spin, Result, Button } from 'antd';
 import TemplateForList from "@/ui/templates/TemplateForList";
 import TodoHeader from "../components/todo-header/TodoHeader";
 import TodoList from "../components/TodoList";
@@ -52,7 +52,23 @@ const TodosTemplate = () => {
   return (
     <>
       <TemplateForList
-        renderHeader={<TodoHeader filterTodos={filterTodos} />}
+        renderHeader={
+          <TodoHeader
+            filterTodos={filterTodos}
+            renderProp={() => (
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{
+                  width: "20%",
+                  backgroundColor: "#053B50"
+                }}
+              >
+                Buscar
+              </Button>
+            )}
+          />
+        }
       >
         <TodoList todos={todoFiltered} refetch={refetch} />
       </TemplateForList>

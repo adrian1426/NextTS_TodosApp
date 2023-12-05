@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import SelectOptions from '@/ui/SelectOptions';
 import { FileSearchOutlined } from '@ant-design/icons';
-import { Input, Button, Form } from 'antd';
+import { Input, Form } from 'antd';
 import styles from './TodoHeader.module.css';
 
 const optionsEstatusTodo = [
@@ -22,11 +22,12 @@ const optionsEstatusTodo = [
 ];
 
 interface TodoHeaderProps {
-  filterTodos: (title: string, status: string) => void
+  filterTodos: (title: string, status: string) => void,
+  renderProp: () => React.ReactElement
 }
 
 const TodoHeader = (props: TodoHeaderProps) => {
-  const { filterTodos } = props;
+  const { filterTodos, renderProp } = props;
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
 
@@ -65,16 +66,7 @@ const TodoHeader = (props: TodoHeaderProps) => {
           onChange={onChangeSelect}
         />
 
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{
-            width: "20%",
-            backgroundColor: "#053B50"
-          }}
-        >
-          Buscar
-        </Button>
+        {renderProp()}
 
       </Form>
     </div >
