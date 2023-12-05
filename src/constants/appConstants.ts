@@ -1,0 +1,1 @@
+export const AUTH_USER_LOCAL_STORAGE = "USER_AUTH";

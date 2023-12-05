@@ -5,14 +5,21 @@ import type { NextPage } from "next";
 import { useRouter } from "next/navigation";
 import { Spin } from 'antd';
 import { PATH_LOGIN } from "@/constants/routesConstants";
+import { AUTH_USER_LOCAL_STORAGE } from "@/constants/appConstants";
 
 const withAuth = (Component: NextPage) => {
 
   const AuthComponent = () => {
     const [isAuth, setIsAuth] = useState(false);
-
     const router = useRouter();
-    const isAuthenticated = true;
+
+    let dataUserLocal = "{}";
+
+    if (typeof window !== "undefined") {
+      dataUserLocal = window.localStorage.getItem(AUTH_USER_LOCAL_STORAGE) || "{}";
+    }
+
+    const isAuthenticated = JSON.parse(dataUserLocal)?.isAuth === 1;
 
     useEffect(() => {
       const validateAuth = () => {
