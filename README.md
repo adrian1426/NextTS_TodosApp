@@ -16,6 +16,10 @@ npm run dev
 yarn dev
 ```
 
+Tercer paso probar la App(http://localhost:3000):
+
+
+
 ## Levantando el proyecto en modo PROD
 
 Si se desea levantar el proyecto en modo PROD, hacer lo siguiente:
@@ -35,6 +39,8 @@ npm start
 #or
 yarn start
 ```
+
+Tercer paso probar la App(http://localhost:3000):
 
 
 ## Sobre el proyecto
