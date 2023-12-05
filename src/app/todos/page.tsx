@@ -1,6 +1,9 @@
+'use client';
+
 import TemplateForList from "@/ui/templates/TemplateForList";
 import TodoHeader from "./components/todo-header/TodoHeader";
 import TodoList from "./components/TodoList";
+import withAuth from "@/HOC/withAuth";
 
 const TodosPage = () => {
   return (
@@ -14,4 +17,4 @@ const TodosPage = () => {
   );
 };
 
-export default TodosPage;
+export default withAuth(TodosPage);
