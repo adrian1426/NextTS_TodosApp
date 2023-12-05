@@ -1,12 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { FloatButton, Modal, Input } from 'antd';
-import { AppstoreAddOutlined } from '@ant-design/icons';
 import { TodoModel } from "@/models/todoModel";
 import TodoCard from "./todo-card/TodoCard";
-
-const { TextArea } = Input;
+import TodoModal from './todo-modal/TodoModal';
+import TodoAddButton from './TodoAddButton';
 
 const todos: TodoModel[] = [
   {
@@ -45,24 +43,13 @@ const TodoList = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log('Change:', e.target.value);
-  };
-
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "space-around",
-      flexWrap: "wrap"
-    }}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-around",
+        flexWrap: "wrap"
+      }}
     >
       {
         todos.map((todo) => (
@@ -70,74 +57,12 @@ const TodoList = () => {
         ))
       }
 
-      <Modal
-        title={<label style={{ color: "white" }}>Agregar tarea</label>}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        closeIcon={null}
-        okText="Aceptar"
-        cancelText="Cancelar"
-        okButtonProps={{
-          style: {
-            backgroundColor: "#053B50"
-          }
-        }}
-        cancelButtonProps={{
-          style: {
-            backgroundColor: "#D2DBDB"
-          }
-        }}
-        styles={{
-          header: {
-            backgroundColor: "#053B50",
-            padding: "5px 10px"
-          },
-          content: {
-            padding: 0,
-            backgroundColor: "#EDF6F5",
-          },
-          footer: {
-            padding: "10px 20px"
-          }
-        }}
-      >
-        <div
-          style={{
-            padding: "5px 20px"
-          }}
-        >
-          <Input
-            placeholder='Titulo de tarea'
-            showCount
-            maxLength={25}
-            onChange={onChange}
-          />
-
-          <br />
-          <br />
-
-          <TextArea
-            placeholder="Descripción de tarea"
-            showCount
-            maxLength={100}
-            onChange={onChange}
-          />
-        </div>
-      </Modal>
-
-      <FloatButton
-        onClick={showModal}
-        icon={<AppstoreAddOutlined style={{ fontSize: "20px" }} />}
-        type='primary'
-        tooltip="Agregar una nueva tarea"
-        style={{
-          right: 15,
-          bottom: 30,
-          width: "50px",
-          height: "50px"
-        }}
+      <TodoModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
       />
+
+      <TodoAddButton showModal={showModal} />
     </div>
   );
 };
