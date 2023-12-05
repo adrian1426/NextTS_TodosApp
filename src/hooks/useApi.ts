@@ -5,9 +5,9 @@ const useApi = (url: string, _options?: RequestInit) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
 
-  const doFetch = useCallback(async (options = _options) => {
+  const doFetch = useCallback(async (actionAfterFetch?: Function) => {
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, _options);
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -15,6 +15,7 @@ const useApi = (url: string, _options?: RequestInit) => {
 
       const dataResponse = await response.json();
       setData(dataResponse);
+      actionAfterFetch && actionAfterFetch();
 
     } catch (errorResponse: any) {
       setError(errorResponse.message);
@@ -24,8 +25,14 @@ const useApi = (url: string, _options?: RequestInit) => {
   }, [_options, url]);
 
   useEffect(() => {
-    doFetch();
-  }, [doFetch]);
+    if (!_options) {
+      doFetch();
+    } else {
+      setIsLoading(false);
+      setError('');
+      setData(null);
+    }
+  }, [doFetch, _options]);
 
   return { isLoading, data, error, refetch: doFetch };
 };

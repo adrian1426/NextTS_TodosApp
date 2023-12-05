@@ -9,12 +9,13 @@ import TodoModal from './todo-modal/TodoModal';
 import TodoAddButton from './TodoAddButton';
 
 interface TodoListProps {
-  todos: TodoModel[] | any
+  todos: TodoModel[] | any,
+  refetch: Function
 }
 
 const TodoList = (props: TodoListProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { todos } = props;
+  const { todos, refetch } = props;
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -47,6 +48,7 @@ const TodoList = (props: TodoListProps) => {
       <TodoModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        refetchTodos={refetch}
       />
 
       <TodoAddButton showModal={showModal} />

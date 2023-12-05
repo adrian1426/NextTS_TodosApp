@@ -10,7 +10,7 @@ const TodosTemplate = () => {
   const user: any = userContext.user;
   const urlApiTodos = `${process.env.NEXT_PUBLIC_TODO_API_PATH_V1}/users/${user.id}/todos`;
 
-  const { data = [], isLoading, error } = useApi(urlApiTodos);
+  const { data = [], isLoading, error, refetch } = useApi(urlApiTodos);
 
   if (isLoading) {
     return <Spin fullscreen size='large' />;
@@ -31,7 +31,7 @@ const TodosTemplate = () => {
       <TemplateForList
         renderHeader={<TodoHeader />}
       >
-        <TodoList todos={data} />
+        <TodoList todos={data} refetch={refetch} />
       </TemplateForList>
     </>
   );
