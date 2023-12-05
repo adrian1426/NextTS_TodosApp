@@ -31,7 +31,7 @@ const TodoList = (props: TodoListProps) => {
     >
       {
         todos.map((todo: TodoModel) => (
-          <TodoCard key={todo.id} todo={todo} />
+          <TodoCard key={todo.id} todo={todo} refetchTodos={refetch} />
         ))
       }
 

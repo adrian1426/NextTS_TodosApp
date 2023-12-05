@@ -1,12 +1,13 @@
-import { FloatButton, Button } from 'antd';
+import { FloatButton, Button, Popconfirm } from 'antd';
 import { MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 interface TodoCardActionsProps {
-  idStatusTodo: number
+  idStatusTodo: number,
+  handleDeleteTodoById: () => void
 }
 
 const TodoCardActions = (props: TodoCardActionsProps) => {
-  const { idStatusTodo } = props;
+  const { idStatusTodo, handleDeleteTodoById } = props;
 
   const textButton = idStatusTodo === 1 ? "Completar tarea" : "Reiniciar tarea";
   const colorButton = idStatusTodo === 1 ? "#64CCC5" : "#D2DBDB";
@@ -32,9 +33,17 @@ const TodoCardActions = (props: TodoCardActionsProps) => {
         }}
         icon={<MoreOutlined />}
       >
-        <FloatButton
-          icon={<DeleteOutlined />}
-        />
+        <Popconfirm
+          title="Eliminar tarea"
+          description="¿Estás seguro de eliminar la tarea?"
+          okText="Si"
+          cancelText="No"
+          onConfirm={handleDeleteTodoById}
+        >
+          <FloatButton
+            icon={<DeleteOutlined />}
+          />
+        </Popconfirm>
         <FloatButton
           icon={<EditOutlined />}
         />

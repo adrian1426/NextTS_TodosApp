@@ -5,15 +5,26 @@ import TodoCardTitle from './TodoCardTitle';
 import TodoCardContent from './TodoCardContent';
 import TodoCardActions from './TodoCardActions';
 import { TodoModel } from '@/models/todoModel';
+import useApi from '@/hooks/useApi';
+import { useUserContext } from '@/context/userContext';
 
 interface TodoCardProps {
-  todo: TodoModel
+  todo: TodoModel,
+  refetchTodos: Function
 }
 
 const TodoCard = (props: TodoCardProps) => {
-  const { todo } = props;
+  const { todo, refetchTodos } = props;
+  const userContext = useUserContext();
+  const user: any = userContext.user;
+  const urlApiTodos = `${process.env.NEXT_PUBLIC_TODO_API_PATH_V1}/users/${user.id}/todos/${todo.id}`;
+  const { refetch: deleteTodoById } = useApi(urlApiTodos, { method: 'DELETE' });
 
   const todoDate = todo.status === 1 ? todo.createdAt : todo.finishedAt;
+
+  const handleDeleteTodoById = () => {
+    deleteTodoById(refetchTodos);
+  };
 
   return (
     <Card
@@ -36,7 +47,10 @@ const TodoCard = (props: TodoCardProps) => {
         date={todoDate}
       />
 
-      <TodoCardActions idStatusTodo={todo.status} />
+      <TodoCardActions
+        idStatusTodo={todo.status}
+        handleDeleteTodoById={handleDeleteTodoById}
+      />
     </Card >
   );
 };
