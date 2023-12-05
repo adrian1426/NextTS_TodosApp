@@ -4,6 +4,7 @@ import StyledComponentsRegistry from '../lib/AntdRegistry';
 import { ConfigProvider } from 'antd';
 import theme from '@/theme/themeConfig';
 import './globals.css';
+import UserContextProvider from '@/context/userContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +18,9 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
     <body className={inter.className}>
       <StyledComponentsRegistry>
         <ConfigProvider theme={theme}>
-          {children}
+          <UserContextProvider>
+            {children}
+          </UserContextProvider>
         </ConfigProvider>
       </StyledComponentsRegistry>
     </body>

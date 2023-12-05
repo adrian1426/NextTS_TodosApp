@@ -5,6 +5,7 @@ import useApi from '@/hooks/useApi';
 import { userModel } from '@/models/userModel';
 import { AUTH_USER_LOCAL_STORAGE } from '@/constants/appConstants';
 import { PATH_TODOS } from '@/constants/routesConstants';
+import { useUserContext } from '@/context/userContext';
 
 const urlApiUsers = `${process.env.NEXT_PUBLIC_TODO_API_PATH_V1}/users`;
 
@@ -17,17 +18,19 @@ const LoginForm = () => {
   const { data } = useApi(urlApiUsers);
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
+  const userContext = useUserContext();
 
   const onFinish = (values: UserLogin) => {
     const users = data || [];
     const { username, password } = values;
 
-    const findUser = users.filter((user: userModel) => user.userName === username && user.password === password);
+    const userFound = users.filter((user: userModel) => user.userName === username && user.password === password);
 
-    if (findUser.length > 0) {
-      const dataStorage = { isAuth: 1, userLogged: findUser[0] };
+    if (userFound.length > 0) {
+      const dataStorage = { isAuth: 1, userLogged: userFound[0] };
       localStorage.setItem(AUTH_USER_LOCAL_STORAGE, JSON.stringify(dataStorage));
 
+      userContext.addUser(userFound[0]);
       router.push(PATH_TODOS);
     } else {
       messageApi.open({

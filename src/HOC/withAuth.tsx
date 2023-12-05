@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { Spin } from 'antd';
 import { PATH_LOGIN } from "@/constants/routesConstants";
 import { AUTH_USER_LOCAL_STORAGE } from "@/constants/appConstants";
+import { useUserContext } from "@/context/userContext";
 
 const withAuth = (Component: NextPage) => {
 
   const AuthComponent = () => {
     const [isAuth, setIsAuth] = useState(false);
     const router = useRouter();
+    const userContext = useUserContext();
 
     let dataUserLocal = "{}";
 
@@ -26,11 +28,13 @@ const withAuth = (Component: NextPage) => {
         if (!isAuthenticated) {
           router.push(PATH_LOGIN);
         } else {
+          userContext.addUser(JSON.parse(dataUserLocal).userLogged);
           setIsAuth(true);
         }
       };
 
       validateAuth();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated, router]);
 
     return !!isAuth ?

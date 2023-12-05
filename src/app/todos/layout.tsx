@@ -6,8 +6,11 @@ import AppLogo from "@/ui/AppLogo";
 import MenuHorizontal from "@/ui/menu/MenuHorizontal";
 import MenuItemLink from "@/ui/menu/MenuItemLink";
 import MenuItemUser from "@/ui/menu/MenuItemUser";
+import { useUserContext } from '@/context/userContext';
 
 export default function TodosLayout({ children }: { children: React.ReactNode }) {
+  const userContext = useUserContext();
+  const user: any = userContext.user;
 
   const items: MenuProps['items'] = [
     {
@@ -20,7 +23,7 @@ export default function TodosLayout({ children }: { children: React.ReactNode })
       key: 'menutareas'
     },
     {
-      label: (<MenuItemUser name='Adrian Hernandez' />),
+      label: (<MenuItemUser name={user?.name} />),
       key: 'infoData',
       style: {
         position: "absolute",
