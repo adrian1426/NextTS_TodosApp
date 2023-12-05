@@ -5,7 +5,7 @@ import { SmileOutlined } from '@ant-design/icons';
 import { Button, Result } from 'antd';
 import { TodoModel } from "@/models/todoModel";
 import TodoCard from "./todo-card/TodoCard";
-import TodoModal from './todo-modal/TodoModal';
+import TodoModalForm from './todo-modal/TodoModalForm';
 import TodoAddButton from './TodoAddButton';
 
 interface TodoListProps {
@@ -45,7 +45,7 @@ const TodoList = (props: TodoListProps) => {
         )
       }
 
-      <TodoModal
+      <TodoModalForm
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         refetchTodos={refetch}
